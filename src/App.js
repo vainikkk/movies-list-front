@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import React, {useEffect, useState} from "react"
 import './App.css';
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Home from "./pages/Home/Home";
 
 function App() {
+  const [ movies, setMovies ] = useState([])
+  const [ topRatedMovies, setTopRatedMovies ] = useState([])
+  
+  useEffect(() => {
+    fetch("/movies?genre=Drama")
+      .then(res => res.json())
+      .then(res => setMovies(res))
+    fetch("/movies/topRated")
+      .then(res => res.json())
+      .then(res => setTopRatedMovies(res))
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+        <Home movies={movies} topRatedMovies={topRatedMovies}/>
+      <Footer />
     </div>
   );
 }
