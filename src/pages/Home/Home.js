@@ -1,9 +1,24 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Carousel } from 'react-bootstrap';
 import VerticalListView from '../../components/VerticalListView/VerticalListView';
 
-function Home({ movies, topRatedMovies }) {
-	
+function Home() {
+	const [movies, setMovies] = useState([])
+  const [topRatedMovies, setTopRatedMovies] = useState([])
+  const [hindiMovies, setHindiMovies] = useState([])
+
+  useEffect(() => {
+    fetch("/movies?genre=Drama")
+      .then(res => res.json())
+      .then(res => setMovies(res))
+    fetch("/movies/topRated")
+      .then(res => res.json())
+      .then(res => setTopRatedMovies(res))
+    fetch("/movies?country=India")
+      .then(res => res.json())
+      .then(res => setHindiMovies(res))
+  }, [])
+
 	return (
 		<div>
 			<Carousel>
@@ -27,6 +42,7 @@ function Home({ movies, topRatedMovies }) {
 			</Carousel>
 			<VerticalListView movies={topRatedMovies} title="Top Rated" />
 			<VerticalListView movies={movies} title="Drama Movies" />
+			<VerticalListView movies={hindiMovies} title="Hindi Movies" />
 		</div>
 	);
 }

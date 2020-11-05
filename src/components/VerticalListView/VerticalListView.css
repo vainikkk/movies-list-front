@@ -15,6 +15,16 @@
 .card-body{
   padding: 10px;
 }
+.vertical-list-view .carousel{
+  margin: 0px 30px;
+}
+.vertical-list-view .carousel-control-prev{
+  left: -125px;
+}
+.vertical-list-view .carousel-control-next{
+  right: -45px;
+  width: 50px;
+}
 .text-muted svg{
   width: 20px;
   padding-right: 3px;

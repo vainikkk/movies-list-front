@@ -1,26 +1,20 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import './App.css';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
+import { BrowserRouter as Router, Route } from "react-router-dom"
+import MovieDetails from "./pages/MovieDetails/MovieDetails";
 
 function App() {
-  const [ movies, setMovies ] = useState([])
-  const [ topRatedMovies, setTopRatedMovies ] = useState([])
-  
-  useEffect(() => {
-    fetch("/movies?genre=Drama")
-      .then(res => res.json())
-      .then(res => setMovies(res))
-    fetch("/movies/topRated")
-      .then(res => res.json())
-      .then(res => setTopRatedMovies(res))
-  }, [])
 
   return (
     <div className="App">
       <Header />
-        <Home movies={movies} topRatedMovies={topRatedMovies}/>
+      <Router>
+        <Route path="/" component={Home} exact />
+        <Route path="/movie/:movieId" component={MovieDetails} exact/>
+      </Router>
       <Footer />
     </div>
   );
